@@ -26,3 +26,20 @@ for i in $CSV_FILES; do
 done 
 
 rm .password_tempfile
+
+SESSION_DIRS=`ls -d $2"/*/*/"`
+
+for session_dir in $SESSION_DIRS; do
+	NUM_BOLD_SCANS=`ls $session_dir"func*" 2>"/dev/null" | wc -l`
+	NUM_T2STAR_SCANS=`ls $session_dir"anat*" 2>"/dev/null" | wc -l`
+
+	if [ $NUM_BOLD_SCANS -eq 0 ]; then
+		SCAN_NUM=`$session_dir| cut -d'\' -f2`
+		echo $SCAN_NUM" has no T2star scan"
+	fi
+
+	if [ $NUM_T2STAR_SCANS -eq 0 ]; then
+		SCAN_NUM=`$session_dir| cut -d'\' -f2`
+		echo $SCAN_NUM" has no BOLD scan"
+	fi
+done
