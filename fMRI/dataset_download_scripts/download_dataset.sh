@@ -27,19 +27,22 @@ done
 
 rm .password_tempfile
 
-SESSION_DIRS=`ls -d $2"/*/*/"`
+SESSION_DIRS=$2"/*/*"
 
 for session_dir in $SESSION_DIRS; do
-	NUM_BOLD_SCANS=`ls $session_dir"func*" 2>"/dev/null" | wc -l`
-	NUM_T2STAR_SCANS=`ls $session_dir"anat*" 2>"/dev/null" | wc -l`
+	# echo "session_dir: "$session_dir
+	BOLD_SCANS=`ls -d "$session_dir"/func* 2>/dev/null`
+	T2STAR_SCANS=`ls -d "$session_dir"/anat* 2>/dev/null`
 
-	if [ $NUM_BOLD_SCANS -eq 0 ]; then
-		SCAN_NUM=`$session_dir| cut -d'\' -f2`
+	if [ -z "$T2STAR_SCANS" ]
+	then
+		SCAN_NUM=`echo $session_dir|cut -d'/' -f3`
 		echo $SCAN_NUM" has no T2star scan"
 	fi
 
-	if [ $NUM_T2STAR_SCANS -eq 0 ]; then
-		SCAN_NUM=`$session_dir| cut -d'\' -f2`
+	if [ -z "$BOLD_SCANS" ]
+	then
+		SCAN_NUM=`echo $session_dir|cut -d'/' -f3`
 		echo $SCAN_NUM" has no BOLD scan"
 	fi
 done
