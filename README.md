@@ -7,10 +7,10 @@ The fMRI pipeline consists of 3 stages.
 Within the `fMRI/dataset_download_scripts` directory you will find scripts designed to download and organize your image files into a neat directory structure arranged by age groups  
 **Dependencies required:** `wget`  
 
-Usage:
+**Usage:**
 `./download_dataset.sh <input_dir> <output_dir> <xnat_central_username> <scan_type(s)>`  
 
-Inputs required:  
+**Inputs required:**  
 * `input_dir` - A directory path (absolute or relative) which contains CSVs of the subjects according to the age ranges. The format of the file name of the CSV is as follows: `download_<age range lower limit>_<age range upper limit>.csv`. For example, the subjects in the range 42-47 years old will be listed in the file named `download_42_47.csv`. You may refer to the sample `input_dir` provided in the `fMRI/dataset_download_scripts` directory.  
 * `output_dir` - A directory path (absolute or relative) to where you wish the dataset to be downloaded to. If the directory doesn't exist, it will be created.  
 * `xnat_central_username` - Your XNAT Central username used for accessing OASIS data on central.xnat.org (you will be prompted for your password before downloading)
@@ -25,4 +25,22 @@ output_dir/62_67/OAS30285_MR_d0129/anat4/file.nii.gz
 ```
 
 ### 2. Preprocessing
-`preprocessing.py` performs the following:
+`preprocessing.py` performs the following:  
+<img src="images/Preprocessing%20pipeline.png" width=500 align="middle">  
+And finally outputs a `.nii.gz` file registered to standard space in each session directory.  
+
+**Usage:**
+`python preprocessing.py -d <input_dir>`
+
+**Inputs required:**  
+* `input_dir` - A directory path (absolute or relative) to the dataset.
+
+### 3. Conversion to networks
+**Usage:**
+`python fmri_to_network.py -d <input_dir>`
+
+
+**Inputs required:**
+* `input_dir` - A directory path (absolute or relative) to the dataset.  
+
+This produces a `.npy` file in each session directory, containing the adjacency matrix of the network constructed from the fMRI data.
