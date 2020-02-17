@@ -1,7 +1,10 @@
 # BITS-CogNeuro-fMRI
 
-### Downloading the dataset
-This download script is designed to download and organize your image files into a neat directory structure arranged by age groups  
+# The fMRI pipeline
+The fMRI pipeline consists of 3 stages.
+
+### 1. Downloading the dataset
+Within the `fMRI/dataset_download_scripts` directory you will find scripts designed to download and organize your image files into a neat directory structure arranged by age groups  
 **Dependencies required:** `wget`  
 
 Usage:
@@ -20,3 +23,6 @@ output_dir/42_47/OAS30001_MR_d0129/anat1/file.nii.gz
 output_dir/62_67/OAS30285_MR_d0129/anat4/file.json
 output_dir/62_67/OAS30285_MR_d0129/anat4/file.nii.gz
 ```
+
+### 2. Preprocessing
+`preprocessing.py` performs the following:
